@@ -5,13 +5,15 @@ bin-release/
 [Bb]in/
 
 # Other files and folders
-.settings/
+.idea/
+xadmin/
 
 # Executables
 *.swf
 *.air
 *.ipa
 *.apk
+*.pyc
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important

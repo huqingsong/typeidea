@@ -14,22 +14,13 @@ import os
 
 VERSION = '${version}'
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'cdxb8_5hxehcq)8$!q$3u7z&f6_8hsv#kp11^$kvf9co4%^pnm'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'blog',
@@ -37,7 +28,8 @@ INSTALLED_APPS = [
     'comment',
     'captcha',
 
-
+    'dal',              # 自动补全代码的轻量级插件 django-autocomplete-light
+    'dal_select2',
     'ckeditor',         # 富文本编辑器
     'ckeditor_uploader',# 富文本编辑器上传图片模块
     'crispy_forms',
@@ -50,11 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dal',              # 自动补全代码的轻量级插件 django-autocomplete-light
-    'dal_select2',
+    'django.contrib.sites',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
+    #自定义的设置用户uuid的中间件
+    'blog.middleware.user_id.UseIDMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -158,3 +152,15 @@ CKEDITOR_CONFIGS = {
 
 
 CKEDITOR_UPLOAD_PATH = "article_images"
+
+#设置redis为缓存
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://192.168.80.129:6379/2',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": "123456",
+        },
+    },
+}

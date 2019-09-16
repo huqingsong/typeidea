@@ -25,6 +25,9 @@ from blog.views import (
         IndexView, CategoryView, TagView,
         PostDetailView, SearchView, AuthorView,
 )
+from comment.views import CommentView, VerifyCaptcha
+from config.views import ListView
+
 urlpatterns = [
     path('admin/', xadmin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
@@ -33,10 +36,15 @@ urlpatterns = [
     url(r'^author/(?P<owner_id>\d+)/$', AuthorView.as_view(), name='author'),
     url(r'^post/(?P<post_id>\d+).html$', PostDetailView.as_view(), name='post-detail'),
     url(r'^search/$', SearchView.as_view(), name='search'),
+    url(r'^comment/$', CommentView.as_view(), name='comment'),
+    url(r'^links/$', ListView.as_view(), name='links'),
 
     url(r'^category-autocomplete/$', CategoryAutocomplete.as_view(), name='category-autocomplete'),
     url(r'^tag-autocomplete/$', TagAutocomplete.as_view(), name='tag-autocomplete'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^captcha/', include('captcha.urls')),
+    url(r'^verify_captcha', VerifyCaptcha.as_view(), name='verify_captcha'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 #这里使用的是

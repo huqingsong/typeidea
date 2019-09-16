@@ -45,13 +45,16 @@
             {% endblock %}
             </div>
             <div class="col-3">
+
                 {% block sidebar %}
                     {% for sidebar in sidebars %}
                     <div class="card sidebar">
                         <div class="card-body">
                             <h4 class="card-title">{{ sidebar.title }}</h4>
                             <p>
-                            {{ sidebar.content_html }}
+                            {% autoescape off %}
+                                {{ sidebar.content_html }}
+                            {% endautoescape %}
                             </p>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ class LinkAdmin(BaseOwnerAdmin):
     #fileds字段控制展示的时候的显示
     fields = ('title', 'href', 'status', 'weight')
 
-    def save_models(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change):
         return super(LinkAdmin, self).save_model(request, obj, form, change)
 
 @xadmin.sites.register(SideBar)
@@ -22,7 +22,7 @@ class SideBarAdmin(BaseOwnerAdmin):
     list_display = ('title', 'display_type', 'content', 'created_time')
     fields = ('title', 'display_type', 'content')
 
-    def save_models(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change):
         return super(SideBarAdmin, self).save_model(request, obj, form, change)
 
 #注册全局样式

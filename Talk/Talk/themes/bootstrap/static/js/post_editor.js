@@ -10,7 +10,7 @@
             $content_md.hide();
             $content_ck.show();
         }
-    }
+    };
     $is_md.on('click', function() {
         switch_editor($(this).is(':checked'));
     });

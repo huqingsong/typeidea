@@ -2,14 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 
-STATUS_SHOW = 1
-STATUS_HIDE = 0
-
-STATUS_NORMAL = 1
-STATUS_DELETE = 0
-
 # Create your models here.
 class Link(models.Model):
+    STATUS_NORMAL = 1
+    STATUS_DELETE = 0
     STATUS_ITEMS = (
         (STATUS_NORMAL, '正常'),
         (STATUS_DELETE, '删除'),
@@ -33,7 +29,11 @@ class Link(models.Model):
 
 
 class SideBar(models.Model):
-
+    """
+    侧边栏
+    """
+    STATUS_SHOW = 1
+    STATUS_HIDE = 0
     STATUS_ITEMS = (
         (STATUS_SHOW, '展示'),
         (STATUS_HIDE, '隐藏'),
@@ -53,7 +53,6 @@ class SideBar(models.Model):
                                                verbose_name="展示类型")
     content = models.CharField(max_length=500, blank=True, verbose_name="内容",
                                help_text="如果设置的不是HTML类型，可为空")
-
     status = models.PositiveIntegerField(default=STATUS_SHOW, choices=STATUS_ITEMS, verbose_name="状态")
     owner = models.ForeignKey(User, verbose_name="作者", on_delete=models.DO_NOTHING)
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

@@ -32,23 +32,26 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'blog',
+    'config',
+    'comment',
+    'captcha',
+
+
+    'ckeditor',         # 富文本编辑器
+    'ckeditor_uploader',# 富文本编辑器上传图片模块
+    'crispy_forms',
+    'rest_framework',
+    'xadmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
-    'config',
-    'comment',
-    'captcha',
-    # 'ckeditor',
-    # 'ckeditor_uploader',
-    # 'dal',
-    # 'dal_select2',
-    'crispy_forms',
-    'rest_framework',
-    'xadmin',
+    'dal',              # 自动补全代码的轻量级插件 django-autocomplete-light
+    'dal_select2',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +145,16 @@ XADMIN_FOOTER_TITLE = 'power by the5fire.com'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+        'tabSpaces': 4,
+        'extraPlugins': 'codesnippet',
+    },
+}
+
+
+CKEDITOR_UPLOAD_PATH = "article_images"

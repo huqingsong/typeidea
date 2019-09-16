@@ -7,7 +7,7 @@ bin-release/
 # Other files and folders
 .idea/
 xadmin/
-
+migrations/
 # Executables
 *.swf
 *.air

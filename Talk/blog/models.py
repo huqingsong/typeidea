@@ -43,6 +43,7 @@ class Tag(models.Model):
         verbose_name = verbose_name_plural = '标签'
         ordering = ['-id']
 
+
     def __str__(self):
         return self.name
 

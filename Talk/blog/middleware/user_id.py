@@ -1,7 +1,10 @@
 import uuid
+import logging
 
 USER_KEY = 'uid'
 TEN_YEARS = 60 * 60 * 24 * 365 * 10
+
+# logger = logging.getLogger('main')
 
 class UseIDMiddleware:
     def __init__(self, get_response):
@@ -9,6 +12,7 @@ class UseIDMiddleware:
 
     def __call__(self, request):
         uid = self.generate_uid(request)
+        # logger.info('uid=%s' %uid)
         request.uid = uid
         response = self.get_response(request)
         response.set_cookie(USER_KEY, uid, max_age=TEN_YEARS, httponly=True)

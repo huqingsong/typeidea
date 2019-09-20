@@ -1,5 +1,6 @@
 import mistune
 
+from django.utils.functional import cached_property
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -119,3 +120,7 @@ class Post(models.Model):
     #         result = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
     #         cache.set('hot_posts', result, 10 * 60)
     #     return result
+    @cached_property
+    def tags(self):
+        return ''.join(self.tag.values_list('name', flat=True))
+

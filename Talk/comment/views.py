@@ -31,6 +31,8 @@ class CommentView(TemplateView):
             'target': target
         }
 
+        return self.render_to_response(context)
+
 class VerifyCaptcha(View):
     def get(self, request):
         captcha_id = CaptchaStore.generate_key()

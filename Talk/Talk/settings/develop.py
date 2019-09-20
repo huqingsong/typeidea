@@ -8,7 +8,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'talk',
-        'HOST': '192.168.80.129',
+        'HOST': '192.168.80.130',
         'USER': 'root',
         'PASSWORD': '123',
         'PORT': 3306

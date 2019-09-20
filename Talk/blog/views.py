@@ -149,5 +149,5 @@ class Handler50x(CommonViewMixin, TemplateView):
     template_name = '50x.html'
 
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
+        context = self.get_context_data()
         return self.render_to_response(context, status=500)

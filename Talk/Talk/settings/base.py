@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -84,12 +82,12 @@ WSGI_APPLICATION = 'Talk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -135,7 +133,7 @@ STATICFILES_DIRS = [
 ]
 
 XADMIN_TITLE = 'Typeidea管理后台'
-XADMIN_FOOTER_TITLE = 'power by the5fire.com'
+XADMIN_FOOTER_TITLE = 'powered by the5fire.com'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -153,14 +151,88 @@ CKEDITOR_CONFIGS = {
 
 CKEDITOR_UPLOAD_PATH = "article_images"
 
-#设置redis为缓存
+#设置redis为缓存，注意redis必须设置密码否则项目运行时会提示不安全
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://192.168.80.129:6379/2',
+        'LOCATION': 'redis://192.168.80.130:6379/2',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PASSWORD": "123456",
+        },
+    },
+}
+
+#存储图片所使用的
+DEFAULT_FILE_STORAGE = 'Talk.storage.WatermarkStorage'
+
+#rest_framework相关设置
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10,
+}
+
+
+# logging日志配置
+LOG_DIR = os.path.join(BASE_DIR, 'log')
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+           'format': '%(levelname)s %(asctime)s %(module)s:'
+                     '%(funcName)s:%(lineno)d %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'standard': {
+            'format': '%(asctime)s [%(threadName)s:%(thread)d] '
+                      '[%(pathname)s:%(funcName)s:%(lineno)d] [%(levelname)s-%(message)s]',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'simple': {
+            'format':'[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d]%(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        }
+    },
+    'handlers':{
+        'console':{
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'blog.log'),
+            'formatter': 'standard',
+            'maxBytes': 1024 * 1024, #1M
+            'backupCount': 5,
+         },
+        'static_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'statistics.log'),
+            'backupCount': 5,
+            'formatter': 'simple',
+            'encoding': 'utf8',
+        },
+    },
+    'loggers': {
+        'main': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'static': {
+            'handlers': ['static_handler'],
+            'level': 'DEBUG'
         },
     },
 }

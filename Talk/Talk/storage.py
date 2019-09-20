@@ -2,15 +2,13 @@ from io import BytesIO
 
 from django.core.files.storage import FileSystemStorage
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
 from PIL import Image, ImageDraw, ImageFont
 
 class WatermarkStorage(FileSystemStorage):
     def save(self, name, content, max_length=None):
         if 'image' in content.content_type:
-            # 加水印
-            image = self.watermark_with_text(content, 'the5fire.com', 'red')
-            content = self.convert_image_to_file(image, name)# 加水印
+            image = self.watermark_with_text(content, 'the5fire.com', 'red') #加水印变成图片对象
+            content = self.convert_image_to_file(image, name)# 保存在内存里面
         return super().save(name, content, max_length=max_length)
 
     def convert_image_to_file(self, image, name):
